@@ -20,5 +20,6 @@ data Options = Options
 program :: (ConsoleEffect :> es, LLMEffect :> es) => Options -> Eff es ()
 program opt = do
   transcription <- LLME.transcribeAudio opt.optFile opt.optLanguage
-  ConsoleE.print transcription
+  summary <- LLME.completeText $ "Summarize the following phone call transcription: " <> transcription
+  ConsoleE.print $ "Transcription summary: " <> summary
   pure ()

@@ -51,7 +51,7 @@ runLLMEffect ::
   Eff es a
 runLLMEffect client = interpret $ \_ -> \case
   CompleteText prompt -> do
-    result <- adapt $ OpenAI.completeText client (OpenAI.defaultCompletionCreate (OpenAI.ModelId "gpt-3.5-turbo") prompt) {ccrMaxTokens = Just 1000}
+    result <- adapt $ OpenAI.completeText client (OpenAI.defaultCompletionCreate (OpenAI.ModelId "text-davinci-003") prompt) {ccrMaxTokens = Just 1000}
     case result of
       Left err -> throwError $ "Client error:" <> T.pack (show err)
       Right response -> do
