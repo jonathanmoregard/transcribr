@@ -73,7 +73,7 @@ runLLMEffect client = interpret $ \_ -> \case
         { audtsrFile = file,
           audtsrModel = OpenAI.ModelId "whisper-1",
           audtsrPrompt = Nothing,
-          audtsrResponseFormat = Just "text",
+          audtsrResponseFormat = Nothing,
           audtsrTemperature = Nothing,
           audtsrLanguage = unLanguage <$> language
         }
