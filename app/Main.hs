@@ -40,8 +40,26 @@ main = do
     options :: Parser Options
     options =
       Options
-        <$> strOption (long "file" <> short 'f' <> metavar "FILEPATH" <> help "File to transcribe")
-        <*> optional (strOption (long "language" <> short 'l' <> metavar "LANGUAGE" <> help "Language for transcription"))
+        <$> strOption
+          ( long "file"
+              <> short 'f'
+              <> metavar "FILEPATH"
+              <> help "File to transcribe"
+          )
+        <*> optional
+          ( strOption
+              ( long
+                  "language"
+                  <> short 'l'
+                  <> metavar "LANGUAGE"
+                  <> help "Language for transcription"
+              )
+          )
+        <*> switch
+          ( long "summarize"
+              <> short 's'
+              <> help "Summarize the transcribed audio"
+          )
     parserInfo :: ParserInfo Options
     parserInfo =
       info

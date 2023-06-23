@@ -14,12 +14,16 @@ import Effectful (Eff, (:>))
 
 data Options = Options
   { optFile :: FilePath,
-    optLanguage :: Maybe Language
+    optLanguage :: Maybe Language,
+    summarize :: Bool
   }
 
 program :: (ConsoleEffect :> es, LLMEffect :> es) => Options -> Eff es ()
 program opt = do
   transcription <- LLME.transcribeAudio opt.optFile opt.optLanguage
-  summary <- LLME.completeText $ "Summarize the following phone call transcription: " <> transcription
-  ConsoleE.print $ "Transcription summary: " <> summary
+  if opt.summarize
+    then do
+      summary <- LLME.completeText $ "Summarize the following phone call transcription: " <> transcription
+      ConsoleE.print $ "Transcription summary: " <> summary
+    else ConsoleE.print $ "Transcription: " <> transcription
   pure ()
